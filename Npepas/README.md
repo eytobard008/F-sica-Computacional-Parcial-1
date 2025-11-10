@@ -9,8 +9,10 @@ N_Particulas/
 ├── include/
 │   └── Npepas.h           # Interfaz principal
 ├── src/
-│   ├── main.cpp           # Programa principal
-│   └── Npepas.cpp         # Implementación
+│   ├── Core.cpp           # Funciones básicas
+│   ├── Simulacion.cpp     # Cálculos de la simulación
+│   ├── Visualizacion.cpp  # Funciones para graficar
+│   └── main.cpp
 ├── scripts/               # Scripts gnuplot
 ├── results/               # Output de simulaciones
 └── Makefile               # Sistema de compilación
