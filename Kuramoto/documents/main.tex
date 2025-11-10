@@ -1,0 +1,233 @@
+\documentclass[12pt]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{float}
+
+\title{Análisis del Modelo de Kuramoto: Sincronización en Sistemas de 2 y 3 Osciladores}
+\author{Esteban Tobar}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Este documento presenta un análisis del modelo de Kuramoto para sistemas de osciladores acoplados. Se estudia la dinámica de sincronización para sistemas de 2 y 3 osciladores, analizando puntos fijos, estabilidad y transiciones de fase mediante.
+\end{abstract}
+
+\section{Introducción}
+El modelo de Kuramoto describe la sincronización en sistemas de osciladores débilmente acoplados. La ecuación fundamental es:
+\begin{equation*}
+\frac{d\theta_i}{dt} = \omega_i + \frac{K}{N}\sum_{j=1}^N \sin(\theta_j - \theta_i)
+\end{equation*}
+
+donde $\theta_i$ es la fase del oscilador $i$-ésimo, $\omega_i$ su frecuencia natural, $K$ la 'fuerza' de acoplamiento y $N$ el número de osciladores.
+
+Para un oscilador aislado, la ecuación de Kuramoto se reduce a:
+\begin{equation*}
+\frac{d\theta}{dt} = \omega
+\end{equation*}
+cuya solución es:
+\begin{equation*}
+\theta(t) = \theta_0 + \omega t
+\end{equation*}
+
+\section{Parámetro de Orden}
+El grado de sincronización se mide mediante el parámetro de orden:
+\begin{equation*}
+re^{i\psi} = \frac{1}{N}\sum_{j=1}^N e^{i\theta_j}
+\end{equation*}
+
+donde $r \in [0,1]$ representa la coherencia de fase ($r=0$: incoherencia total, $r=1$: sincronización completa).
+
+El parámetro de orden $r$ surge naturalmente al reescribir la ecuación de Kuramoto en forma compleja. Partiendo de la ecuación original:
+\begin{equation*}
+\frac{d\theta_i}{dt} = \omega_i + \frac{K}{N}\sum_{j=1}^N \sin(\theta_j - \theta_i)
+\end{equation*}
+
+Usamos la identidad $\sin(\theta_j - \theta_i) = \text{Im}[e^{i(\theta_j - \theta_i)}]$ y reescribimos:
+\begin{equation*}
+\frac{d\theta_i}{dt} = \omega_i + \frac{K}{N}\sum_{j=1}^N \text{Im}[e^{i(\theta_j - \theta_i)}]
+\end{equation*}
+
+Factorizando $e^{-i\theta_i}$:
+\begin{equation*}
+\frac{d\theta_i}{dt} = \omega_i + \frac{K}{N}\text{Im}\left[e^{-i\theta_i}\sum_{j=1}^N e^{i\theta_j}\right]
+\end{equation*}
+
+Definiendo el parámetro de orden complejo $re^{i\psi} = \frac{1}{N}\sum_{j=1}^N e^{i\theta_j}$, obtenemos:
+\begin{equation*}
+\frac{d\theta_i}{dt} = \omega_i + \frac{K}{N}\text{Im}\left[e^{-i\theta_i} \cdot N re^{i\psi}\right]
+= \omega_i + K r \text{Im}[e^{i(\psi - \theta_i)}]
+\end{equation*}
+
+Finalmente, usando $\text{Im}[e^{i(\psi - \theta_i)}] = \sin(\psi - \theta_i)$, llegamos a:
+\begin{equation*}
+\frac{d\theta_i}{dt} = \omega_i + Kr\sin(\psi - \theta_i)
+\end{equation*}
+
+Esta forma muestra que cada oscilador es influenciado por un campo medio de amplitud $r$ y fase $\psi$.
+
+\section{Caso de 2 Osciladores}
+
+\subsection{Ecuaciones Individuales}
+Para un oscilador aislado, la ecuación es simplemente:
+\begin{equation*}
+\frac{d\theta}{dt} = \omega
+\end{equation*}
+que se integra a $\theta(t) = \theta(0) + \omega t$, mostrando rotación uniforma.
+
+Para 2 osciladores acoplados, las ecuaciones completas son:
+\begin{equation*}
+\frac{d\theta_1}{dt} = \omega_1 + \frac{K}{2}\sin(\theta_2 - \theta_1)
+\end{equation*}
+\begin{equation*}
+\frac{d\theta_2}{dt} = \omega_2 + \frac{K}{2}\sin(\theta_1 - \theta_2)
+\end{equation*}
+
+\subsection{Reducción del Sistema}
+Definiendo $\phi = \theta_2 - \theta_1$ y $\Delta\omega = \omega_2 - \omega_1$, y restando las ecuaciones anteriores, obtenemos:
+\begin{equation*}
+\frac{d\phi}{dt} = \Delta\omega - K\sin\phi
+\end{equation*}
+
+\subsection{Puntos Fijos y Potencial}
+Los puntos fijos satisfacen $\frac{d\phi}{dt} = 0$, es decir:
+\begin{equation*}
+\sin\phi = \frac{\Delta\omega}{K}
+\end{equation*}
+
+Para que existan puntos fijos reales, se requiere $|\frac{\Delta\omega}{K}| \leq 1$, lo que define el \textbf{umbral de acoplamiento}:
+\begin{equation*}
+K_{\text{umbral}} = |\Delta\omega|
+\end{equation*}
+
+Para $K < K_{\text{umbral}}$ no hay puntos fijos y $\phi$ oscila periódicamente. Para $K > K_{\text{umbral}}$ existen dos puntos fijos por período: uno estable y uno inestable.
+
+El potencial efectivo se obtiene asumiendo que $\frac{d\phi}{dt} = -\frac{dV}{d\phi}$. Integrando:
+\begin{equation*}
+V(\phi) = -\int (\Delta\omega - K\sin\phi)d\phi = -\Delta\omega\phi - K\cos\phi + C
+\end{equation*}
+Los mínimos de $V(\phi)$ corresponden a puntos fijos estables, y los máximos a inestables.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Gráficas/bifurcation_2osc.png}
+    \caption{Bifurcación 2osc con diferencia de fases}
+    \label{fig:bifurcation_2osc}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Gráficas/stability_diagrams.png}
+    \caption{Puntos fijos de 2osc}
+    \label{fig:stability_diagrams}
+\end{figure}
+
+\section{Caso de 3 Osciladores}
+
+\subsection{Ecuaciones Individuales}
+Las ecuaciones para los 3 osciladores son:
+\begin{equation*}
+\frac{d\theta_1}{dt} = \omega_1 + \frac{K}{3}[\sin(\theta_2 - \theta_1) + \sin(\theta_3 - \theta_1)]
+\end{equation*}
+\begin{equation*}
+\frac{d\theta_2}{dt} = \omega_2 + \frac{K}{3}[\sin(\theta_1 - \theta_2) + \sin(\theta_3 - \theta_2)]
+\end{equation*}
+\begin{equation*}
+\frac{d\theta_3}{dt} = \omega_3 + \frac{K}{3}[\sin(\theta_1 - \theta_3) + \sin(\theta_2 - \theta_3)]
+\end{equation*}
+
+\subsection{Formulación en Diferencias}
+Definiendo las tres diferencias de fase:
+\begin{equation*}
+\Delta_{21} = \theta_2 - \theta_1
+\end{equation*}
+\begin{equation*}
+\Delta_{31} = \theta_3 - \theta_1
+\end{equation*}
+\begin{equation*}
+\Delta_{32} = \theta_3 - \theta_2 = \Delta_{31} - \Delta_{21}
+\end{equation*}
+
+Las ecuaciones se reducen a:
+\begin{equation*}
+\frac{d\Delta_{21}}{dt} = \omega_2 - \omega_1 - \frac{K}{3}[\sin\Delta_{21} + \sin(\Delta_{31} - \Delta_{21}) + \sin\Delta_{31}]
+\end{equation*}
+\begin{equation*}
+\frac{d\Delta_{31}}{dt} = \omega_3 - \omega_1 - \frac{K}{3}[\sin\Delta_{31} + \sin(\Delta_{21} - \Delta_{31}) + \sin\Delta_{21}]
+\end{equation*}
+
+Nótese que $\Delta_{32}$ no es independiente, cumpliéndose $\Delta_{32} = \Delta_{31} - \Delta_{21}$.
+
+\section{Resultados Numéricos}
+
+\subsection{Series Temporales}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{Gráficas/time_series_2osc.png}
+    \caption{Series temporales para 2 osciladores}
+    \label{fig:time_series_2osc}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{Gráficas/time_series_3osc.png}
+    \caption{Series temporales para 3 osciladores}
+    \label{fig:time_series_3osc}
+\end{figure}
+
+\subsection{Parámetro de Orden}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{Gráficas/order_parameters_2osc.png}
+    \caption{Parámetro de orden para 2 osciladores}
+    \label{fig:order_parameters_2osc}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{Gráficas/order_parameters_3osc.png}
+    \caption{Parámetro de orden para 3 osciladores}
+    \label{fig:order_parameters_3osc}
+\end{figure}
+
+\subsection{Mapas de Sensibilidad}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{Gráficas/sensitivity_maps.png}
+    \caption{Mapas de fase}
+    \label{fig:sensitivity_maps}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Gráficas/frequency_maps.png}
+    \caption{Mapas de frecuencia}
+    \label{fig:frequency_maps}
+\end{figure}
+
+\subsection{Análisis de Bifurcación}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Gráficas/bifurcation_3osc.png}
+    \caption{Bifurcación para 3 osciladores}
+    \label{fig:bifurcation_3osc}
+\end{figure}
+
+\section{Discusión}
+Para $N=2$, la transición a sincronización es abrupta y determinística, ocurriendo en $K_{\text{umbral}} = |\Delta\omega|$. Para $N=3$, el comportamiento es más complejo:
+
+\begin{itemize}
+\item No existe $K_{\text{umbral}}$ único
+\item Múltiples estados estacionarios posibles
+\item Dependencia de condiciones iniciales
+\item Estados de sincronización parcial comunes
+\end{itemize}
+
+Los mapas de sensibilidad muestran regiones donde pequeñas variaciones en condiciones iniciales producen grandes cambios en el estado final.
+
+\end{document}
